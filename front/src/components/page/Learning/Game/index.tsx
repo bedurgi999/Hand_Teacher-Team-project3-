@@ -23,6 +23,7 @@ import {
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
 import ButtonList from "./buttonList/ButtonList";
+import MediaPipeWebCam from "../../../MediaPipeWebCam";
 
 interface VideoDataProps {
   _id: string;
@@ -160,6 +161,7 @@ const LearningGame = () => {
             <HR />
           </TopContainer>
           <BottomContainer>
+            <MediaPipeWebCam cameraOn={cameraOn} />
             <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
               <StartTriangle cameraOn={cameraOn} />
             </StartButton>
