@@ -24,7 +24,7 @@ def build_model(mode, actions):
     :return model:
     """
     model = tf.keras.models.Sequential()
-    model.add(tf.keras.layers.LSTM(64, return_sequences=True, activation='relu', input_shape=(30,258)))
+    model.add(tf.keras.layers.LSTM(64, return_sequences=True, activation='relu', input_shape=(30, 258)))
     model.add(tf.keras.layers.LSTM(128, return_sequences=True, activation='relu'))
     model.add(tf.keras.layers.LSTM(64, return_sequences=False, activation='relu'))
     model.add(tf.keras.layers.Dense(64, activation='relu'))
