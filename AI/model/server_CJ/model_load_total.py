@@ -1,5 +1,5 @@
 import numpy as np
-import tensorflow as tf
+import tensorflow
 import os
 from scipy.stats import rankdata
 
@@ -86,6 +86,7 @@ def result_to_sequence(result):
     '''
     input_sequences = []
     SEQ_LENGTH = 30
+    
     for num in range(SEQ_LENGTH):
         keypoint = extract_keypoints(result[num])
         input_sequences.append(keypoint)
@@ -102,10 +103,23 @@ def prediction(result):
     :return top3_alphabet:
     '''
     model = build_model()
-    sequence = result_to_sequence(result)
+    sequenceList = []
+    for i in range(len(result)-30):
+        sequence = result_to_sequence(result[i:i+30])
+        sequenceList.append(sequence)
+
     actions = choose_action()
-    res = model.predict(np.expand_dims(sequence, axis=0))[0]
+
+    resList = []
+    for seq in sequenceList:
+        res = model.predict(np.expand_dims(seq, axis=0))[0]
+        resList.append(res)
+    
     # 최상위 3개 알파벳/단어
-    predict_top3_idx = top_n(3, res)
+    top3List = []
+    for top3 in resList:
+        predict_top3_idx = top_n(3, top3)
+        top3List.append(predict_top3_idx)
+    
     top3_alphabet = [actions[i] for i in predict_top3_idx]
     return top3_alphabet
